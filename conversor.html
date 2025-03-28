@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de TXT para PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <h1>Conversor de TXT para PDF</h1>
+    <label for="arquivoTxt">Selecione o arquivo .txt:</label>
+    <input type="file" id="arquivoTxt" accept=".txt">
+    <br>
+    <button onclick="gerarPDF()">Gerar PDF</button>
+    <div id="visualizarPDF" style="margin-top: 20px;"></div>
+
+    <script>
+        async function gerarPDF() {
+            const arquivoInput = document.getElementById('arquivoTxt');
+            const visualizarPDF = document.getElementById('visualizarPDF');
+
+            // Limpar visualização anterior
+            visualizarPDF.innerHTML = "";
+
+            if (arquivoInput.files.length === 0) {
+                alert("Por favor, selecione um arquivo .txt.");
+                return;
+            }
+
+            const arquivo = arquivoInput.files[0];
+            if (arquivo.type !== "text/plain") {
+                alert("Por favor, selecione um arquivo .txt válido.");
+                return;
+            }
+
+            const texto = await arquivo.text();
+
+            // Criar PDF usando jsPDF
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            pdf.text(texto, 10, 10);
+
+            // Exibir o PDF gerado na página
+            const pdfURL = pdf.output("bloburl");
+            const iframe = document.createElement("iframe");
+            iframe.style.width = "100%";
+            iframe.style.height = "500px";
+            iframe.src = pdfURL;
+            visualizarPDF.appendChild(iframe);
+
+            // Disponibilizar para download
+            const downloadLink = document.createElement("a");
+            downloadLink.href = pdfURL;
+            downloadLink.download = "arquivo.pdf";
+            downloadLink.textContent = "Baixar PDF gerado";
+            visualizarPDF.appendChild(downloadLink);
+        }
+    </script>
+</body>
+</html>
+
