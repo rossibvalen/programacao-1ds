@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de QR Code</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Gerador de QR Code</h1>
+    <label for="link">Insira o link:</label>
+    <input type="text" id="link" placeholder="https://exemplo.com">
+    <br>
+    <button onclick="gerarQRCode()">Gerar QR Code</button>
+    <div id="qrcode" style="margin-top: 20px;"></div>
+
+    <script>
+        function gerarQRCode() {
+            const link = document.getElementById('link').value;
+            const qrCodeContainer = document.getElementById('qrcode');
+
+            // Limpar QR Code anterior
+            qrCodeContainer.innerHTML = "";
+
+            if (link.trim() === "") {
+                alert("Por favor, insira um link válido.");
+                return;
+            }
+
+            // Gerar QR Code
+            new QRCode(qrCodeContainer, link);
+        }
+    </script>
+</body>
+</html>
