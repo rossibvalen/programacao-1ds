@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value);
+
+            if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+                document.getElementById("resultado").textContent = "Por favor, insira valores válidos para peso e altura.";
+                return;
+            }
+
+            const imc = peso / (altura * altura);
+            const imcFormatado = imc.toFixed(2);
+            document.getElementById("resultado").textContent = `Seu IMC é: ${imcFormatado}`;
+        }
+
+        function limparCampos() {
+            document.getElementById("peso").value = "";
+            document.getElementById("altura").value = "";
+            document.getElementById("resultado").textContent = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora de IMC</h1>
+    <label for="peso">Peso (kg):</label>
+    <input type="number" id="peso" step="0.1"><br><br>
+
+    <label for="altura">Altura (m):</label>
+    <input type="number" id="altura" step="0.01"><br><br>
+
+    <button onclick="calcularIMC()">Calcular</button>
+    <button onclick="limparCampos()">Limpar</button><br><br>
+
+    <p id="resultado"></p>
+</body>
+</html>
