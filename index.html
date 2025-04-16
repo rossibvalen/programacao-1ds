@@ -3,42 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo com HTML, CSS e JS</title>
-    <!-- Estilo CSS integrado -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            color: #4682b4;
-        }
-        button {
-            background-color: #4682b4;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #5a9bd3;
-        }
-    </style>
+    <title>Jogo de Matemática</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Olá, bem-vindo!</h1>
-    <p>Clique no botão abaixo para exibir uma mensagem:</p>
-    <button onclick="mostrarMensagem()">Clique aqui!</button>
-
-    <!-- Script JavaScript integrado -->
-    <script>
-        function mostrarMensagem() {
-            alert("Olá, bem vindo a essa incrível página!");
-        }
-    </script>
+    <div class="game-container">
+        <h1>Jogo de Matemática</h1>
+        <div class="question-container">
+            <p id="question"></p>
+            <input type="number" id="answer" placeholder="Digite sua resposta">
+            <button id="submit">Enviar</button>
+        </div>
+        <div class="feedback-container">
+            <p id="feedback"></p>
+        </div>
+        <div class="score-container">
+            <p>Pontuação: <span id="score">0</span></p>
+            <p>Tempo Restante: <span id="time">10</span>s</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
