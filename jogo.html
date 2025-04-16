@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Matemática</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question-container,
+        .feedback-container,
+        .score-container {
+            margin: 10px 0;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Jogo de Matemática</h1>
+        <div class="question-container">
+            <p id="question"></p>
+            <input type="number" id="answer" placeholder="Digite sua resposta">
+            <button id="submit">Enviar</button>
+        </div>
+        <div class="feedback-container">
+            <p id="feedback"></p>
+        </div>
+        <div class="score-container">
+            <p>Pontuação: <span id="score">0</span></p>
+            <p>Tempo Restante: <span id="time">10</span>s</p>
+        </div>
+    </div>
+    <script>
+        let score = 0;
+        let time = 10;
+        let timer;
+        const questionEl = document.getElementById('question');
+        const answerEl = document.getElementById('answer');
+        const feedbackEl = document.getElementById('feedback');
+        const scoreEl = document.getElementById('score');
+        const timeEl = document.getElementById('time');
+        const submitButton = document.getElementById('submit');
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * (score + 1) * 10);
+            const num2 = Math.floor(Math.random() * (score + 1) * 10);
+            const operators = ['+', '-', '*'];
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+            const question = `${num1} ${operator} ${num2}`;
+            const answer = eval(question);
+            return { question, answer };
+        }
+
+        function startGame() {
+            time = 10;
+            score = 0;
+            scoreEl.textContent = score;
+            generateNewQuestion();
+            timer = setInterval(() => {
+                time--;
+                timeEl.textContent = time;
+                if (time === 0) {
+                    clearInterval(timer);
+                    feedbackEl.textContent = 'Tempo esgotado!';
+                    feedbackEl.classList.remove('correct', 'incorrect');
+                    feedbackEl.classList.add('incorrect');
+                    submitButton.disabled = true;
+                }
+            }, 1000);
+        }
+
+        function generateNewQuestion() {
+            const { question, answer } = generateQuestion();
+            questionEl.textContent = question;
+            questionEl.dataset.answer = answer;
+            feedbackEl.textContent = '';
+            answerEl.value = '';
+            answerEl.focus();
+        }
+
+        submitButton.addEventListener('click', () => {
+            const userAnswer = parseInt(answerEl.value, 10);
+            const correctAnswer = parseInt(questionEl.dataset.answer, 10);
+            if (userAnswer === correctAnswer) {
+                score++;
+                time = 10;
+                feedbackEl.textContent = 'Correto!';
+                feedbackEl.classList.remove('incorrect');
+                feedbackEl.classList.add('correct');
+                generateNewQuestion();
+            } else {
+                feedbackEl.textContent = 'Errado!';
+                feedbackEl.classList.remove('correct');
+                feedbackEl.classList.add('incorrect');
+            }
+            scoreEl.textContent = score;
+        });
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>
