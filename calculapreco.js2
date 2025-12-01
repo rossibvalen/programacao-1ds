@@ -1,0 +1,22 @@
+function calcularPrecoFinal(produto) {
+    const desconto = produto.desconto ?? 0;
+
+    // INCLUSÃO: Imprime o preço inicial com 2 casas decimais.
+    // Usamos produto.preco diretamente, aplicando .toFixed(2) para formatação.
+    console.log(`Preço inicial de ${produto.nome}: R$ ${produto.preco.toFixed(2)}`);
+
+    // Cálculo do preço final
+    const precoFinal = produto.preco - (produto.preco * desconto / 100);
+    
+    // Imprime o preço final com 2 casas decimais.
+    console.log(`Preço final de ${produto.nome}: R$ ${precoFinal.toFixed(2)}`);
+}
+
+// Exemplo de uso
+const produto1 = {
+    nome: "Fone de ouvido",
+    preco: 200,
+    // Valor do desconto alterado de 15 para 25
+    desconto: 25 
+};
+calcularPrecoFinal(produto1);
